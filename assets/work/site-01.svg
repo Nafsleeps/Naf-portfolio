@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="Screenshot 01 placeholder">
+  <rect width="1200" height="800" fill="#141311"/>
+  <rect x="0.5" y="0.5" width="1199" height="799" fill="none" stroke="#26241F"/>
+  <g fill="#8B8781" font-family="Inter, system-ui, sans-serif" font-size="28" font-weight="400" text-anchor="middle">
+    <text x="600" y="410">Screenshot 01</text>
+  </g>
+</svg>
