@@ -1,0 +1,234 @@
+@import "tailwindcss";
+
+@source "../index.html";
+
+/* ────────────────────────────────────────────────────────────────
+   DESIGN SYSTEM
+   Every colour, size and measure on the site is defined here.
+   Nothing downstream introduces a new value.
+   ──────────────────────────────────────────────────────────────── */
+@theme {
+  /* Palette — dark, low contrast between surfaces, one accent. */
+  --color-ink: #0d0c0b;          /* off-black — page background      */
+  --color-surface: #141311;      /* raised panel                     */
+  --color-bone: #edeae5;         /* off-white — primary text         */
+  --color-muted: #8b8781;        /* grey — secondary text            */
+  --color-line: #26241f;         /* hairline rules and borders       */
+  --color-accent: #d85a30;       /* coral — buttons and marks        */
+  --color-accent-ink: #4a1b0c;   /* text on an accent fill           */
+  --color-accent-hover: #f0997b; /* links and hover                  */
+
+  /* Type — two sizes, two weights. That is the whole scale. */
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+
+  --text-body: 18px;
+  --text-body--line-height: 1.6;
+  --text-label: 14px;
+  --text-label--line-height: 1.4;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+
+  /* Measures — reading content is 680px; only the work grid widens. */
+  --container-content: 680px;
+  --container-wide: 1100px;
+}
+
+/* Values that change between mobile and desktop live as plain
+   custom properties so one media query moves the whole page. */
+:root {
+  --h1-size: 36px;
+  --section-gap: 64px;
+  --page-pad: 96px;
+  --gutter: 24px;
+}
+
+@media (width >= 768px) {
+  :root {
+    --h1-size: 56px;
+    --section-gap: 120px;
+    --page-pad: 160px;
+    --gutter: 40px;
+  }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-bone);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.6;
+    font-weight: var(--font-weight-regular);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent-hover);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      transition-duration: 1ms !important;
+      animation-duration: 1ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Page rhythm ------------------------------------------------- */
+  .page {
+    padding-block: var(--page-pad);
+  }
+
+  /* One container for every section: same gutter, same measure. */
+  .section {
+    padding-inline: var(--gutter);
+  }
+
+  .section + .section {
+    margin-top: var(--section-gap);
+  }
+
+  .measure {
+    max-width: var(--container-content);
+    margin-inline: auto;
+  }
+
+  /* Work grid only. */
+  .measure-wide {
+    max-width: var(--container-wide);
+    margin-inline: auto;
+  }
+
+  /* Type --------------------------------------------------------- */
+  .h1 {
+    font-size: var(--h1-size);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-weight: var(--font-weight-medium);
+    text-wrap: balance;
+  }
+
+  /* Section headings sit at body size — restraint over scale. */
+  .h2 {
+    font-size: var(--text-body);
+    line-height: 1.6;
+    font-weight: var(--font-weight-medium);
+  }
+
+  .label {
+    font-size: var(--text-label);
+    line-height: 1.4;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: var(--font-weight-regular);
+    color: var(--color-muted);
+  }
+
+  .caption {
+    font-size: var(--text-label);
+    line-height: 1.5;
+    font-weight: var(--font-weight-regular);
+    color: var(--color-muted);
+  }
+
+  /* Interactive -------------------------------------------------- */
+  /* Text links carry the accent so they read as links against body
+     copy; the rule underneath arrives on hover. */
+  .link {
+    color: var(--color-accent-hover);
+    border-bottom: 1px solid transparent;
+    transition: border-color 150ms ease;
+  }
+
+  .link:hover {
+    border-bottom-color: currentColor;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--color-accent);
+    color: var(--color-accent-ink);
+    font-size: var(--text-body);
+    font-weight: var(--font-weight-medium);
+    line-height: 1;
+    padding: 18px 28px;
+    border-radius: 999px;
+    transition: background-color 150ms ease;
+  }
+
+  .btn:hover {
+    background-color: var(--color-accent-hover);
+  }
+
+  /* Blocks -------------------------------------------------------- */
+  /* Running prose: paragraphs spaced by one line of body text. */
+  .prose > p + p {
+    margin-top: 1.6em;
+  }
+
+  /* Service cards. Hairline rules rather than boxes — the measure
+     already does the containing. */
+  .card + .card {
+    margin-top: 48px;
+    padding-top: 48px;
+    border-top: 1px solid var(--color-line);
+  }
+
+  /* Lists of what's included. Caption size, dash marker. */
+  .list {
+    list-style: none;
+    padding: 0;
+    font-size: var(--text-label);
+    line-height: 1.5;
+    color: var(--color-muted);
+  }
+
+  .list > li {
+    position: relative;
+    padding-left: 22px;
+  }
+
+  .list > li + li {
+    margin-top: 10px;
+  }
+
+  .list > li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.7em;
+    width: 8px;
+    height: 1px;
+    background-color: var(--color-muted);
+  }
+
+  /* Scaffolding for the sections still to be built. Delete each
+     .stub as its section gets filled in. */
+  .stub {
+    border: 1px dashed var(--color-line);
+    border-radius: 4px;
+    padding: 32px 24px;
+  }
+}
