@@ -153,16 +153,16 @@
   }
 
   /* Interactive -------------------------------------------------- */
+  /* Text links carry the accent so they read as links against body
+     copy; the rule underneath arrives on hover. */
   .link {
-    border-bottom: 1px solid var(--color-line);
-    transition:
-      color 150ms ease,
-      border-color 150ms ease;
+    color: var(--color-accent-hover);
+    border-bottom: 1px solid transparent;
+    transition: border-color 150ms ease;
   }
 
   .link:hover {
-    color: var(--color-accent-hover);
-    border-bottom-color: var(--color-accent-hover);
+    border-bottom-color: currentColor;
   }
 
   .btn {
@@ -180,6 +180,48 @@
 
   .btn:hover {
     background-color: var(--color-accent-hover);
+  }
+
+  /* Blocks -------------------------------------------------------- */
+  /* Running prose: paragraphs spaced by one line of body text. */
+  .prose > p + p {
+    margin-top: 1.6em;
+  }
+
+  /* Service cards. Hairline rules rather than boxes — the measure
+     already does the containing. */
+  .card + .card {
+    margin-top: 48px;
+    padding-top: 48px;
+    border-top: 1px solid var(--color-line);
+  }
+
+  /* Lists of what's included. Caption size, dash marker. */
+  .list {
+    list-style: none;
+    padding: 0;
+    font-size: var(--text-label);
+    line-height: 1.5;
+    color: var(--color-muted);
+  }
+
+  .list > li {
+    position: relative;
+    padding-left: 22px;
+  }
+
+  .list > li + li {
+    margin-top: 10px;
+  }
+
+  .list > li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.7em;
+    width: 8px;
+    height: 1px;
+    background-color: var(--color-muted);
   }
 
   /* Scaffolding for the sections still to be built. Delete each
