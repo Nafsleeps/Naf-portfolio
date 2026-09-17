@@ -14,9 +14,9 @@
   --color-bone: #edeae5;         /* off-white — primary text         */
   --color-muted: #8b8781;        /* grey — secondary text            */
   --color-line: #26241f;         /* hairline rules and borders       */
-  --color-accent: #d85a30;       /* coral — buttons and marks        */
-  --color-accent-ink: #4a1b0c;   /* text on an accent fill           */
-  --color-accent-hover: #f0997b; /* links and hover                  */
+  --color-accent: #d4ff3d;       /* lime — buttons and marks         */
+  --color-accent-ink: #141a05;   /* near-black on an accent fill     */
+  --color-accent-hover: #e2ff7d; /* links and hover                  */
 
   /* Type — two sizes, two weights. That is the whole scale. */
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system,
@@ -26,6 +26,8 @@
   --text-body--line-height: 1.6;
   --text-label: 14px;
   --text-label--line-height: 1.4;
+  --text-micro: 12px;
+  --text-micro--line-height: 1.4;
 
   --font-weight-regular: 400;
   --font-weight-medium: 500;
@@ -38,10 +40,17 @@
 /* Values that change between mobile and desktop live as plain
    custom properties so one media query moves the whole page. */
 :root {
+  /* The document is dark. Declared here so the browser paints its own
+     surfaces — scrollbars, form field internals, autofill — from the
+     dark palette instead of the light one. */
+  color-scheme: dark;
+
   --h1-size: 36px;
   --section-gap: 64px;
   --page-pad: 96px;
+  --page-pad-top: 56px;
   --gutter: 24px;
+  --header-h: 59px;
 }
 
 @media (width >= 768px) {
@@ -49,12 +58,17 @@
     --h1-size: 56px;
     --section-gap: 120px;
     --page-pad: 160px;
+    --page-pad-top: 100px;
     --gutter: 40px;
+    --header-h: 59px;
   }
 }
 
 @layer base {
+  /* The canvas colour lives on html so the first paint is already dark,
+     before the body rule — or this stylesheet — has any say. */
   html {
+    background-color: var(--color-ink);
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
   }
@@ -96,8 +110,11 @@
 
 @layer components {
   /* Page rhythm ------------------------------------------------- */
+  /* Top padding is shorter than the bottom: the header already holds
+     open the space above the hero. */
   .page {
-    padding-block: var(--page-pad);
+    padding-top: var(--page-pad-top);
+    padding-bottom: var(--page-pad);
   }
 
   /* One container for every section: same gutter, same measure. */
@@ -107,6 +124,11 @@
 
   .section + .section {
     margin-top: var(--section-gap);
+  }
+
+  /* Jump targets clear the sticky header rather than hiding under it. */
+  .section {
+    scroll-margin-top: calc(var(--header-h) + 24px);
   }
 
   .measure {
@@ -180,6 +202,93 @@
 
   .btn:hover {
     background-color: var(--color-accent-hover);
+  }
+
+
+  /* Header ------------------------------------------------------- */
+  /* Solid ink rather than a translucent blur: the header sits over a
+     dark page either way, and solid keeps the surface provably dark. */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background-color: var(--color-ink);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .site-header-inner {
+    display: flex;
+    align-items: center;
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+    padding-block: 20px;
+  }
+
+  /* Wordmark: title case, bold, accent dot. The dot is the only mark
+     on the page that is pure accent at full size. */
+  .wordmark {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+    font-size: var(--text-body);
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--color-bone);
+  }
+
+  .wordmark-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background-color: var(--color-accent);
+  }
+
+  /* Status pill -------------------------------------------------- */
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    background-color: transparent;
+    font-size: var(--text-micro);
+    line-height: 1.4;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-bone);
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background-color: var(--color-accent);
+    flex: none;
+  }
+
+  /* Numbered section labels -------------------------------------- */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: var(--text-micro);
+    line-height: 1.4;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-accent);
+  }
+
+  /* A short rule, not a full-width one — it terminates the label
+     rather than dividing the page. */
+  .section-label-rule {
+    flex: none;
+    width: 56px;
+    height: 1px;
+    background-color: var(--color-line);
   }
 
   /* Blocks -------------------------------------------------------- */

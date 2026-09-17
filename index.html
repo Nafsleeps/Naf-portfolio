@@ -9,6 +9,9 @@
   <!-- PLACEHOLDER: swap https://example.com/ for your real domain, here and in the og:url below -->
   <link rel="canonical" href="https://example.com/" />
   <meta name="theme-color" content="#0D0C0B" />
+  <!-- Declared before the stylesheet parses, so the very first paint
+       uses the dark canvas instead of the browser default white. -->
+  <meta name="color-scheme" content="dark" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
@@ -44,12 +47,21 @@
 <body>
   <a href="#hero" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-surface focus:px-4 focus:py-3">Skip to content</a>
 
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="wordmark" href="#hero">Naf<span class="wordmark-dot" aria-hidden="true"></span></a>
+    </div>
+  </header>
+
   <main class="page">
 
     <!-- ── Hero ─────────────────────────────────────────────────── -->
     <section id="hero" class="section" aria-labelledby="hero-title">
       <div class="measure">
-        <p class="label">Naf</p>
+        <p class="status-pill">
+          <span class="status-dot" aria-hidden="true"></span>
+          Open for new work
+        </p>
 
         <h1 id="hero-title" class="h1 mt-8 md:mt-10">
           I build websites and AI agents for small businesses
@@ -64,7 +76,12 @@
     <!-- ── Story ────────────────────────────────────────────────── -->
     <section id="story" class="section" aria-labelledby="story-title">
       <div class="measure">
-        <h2 id="story-title" class="label">Story</h2>
+        <h2 id="story-title" class="section-label">
+          <span>01</span>
+          <span aria-hidden="true">&mdash;</span>
+          <span>The Story</span>
+          <span class="section-label-rule" aria-hidden="true"></span>
+        </h2>
 
         <div class="prose mt-10 md:mt-12">
           <p>
@@ -94,7 +111,12 @@
     <!-- ── Services ─────────────────────────────────────────────── -->
     <section id="services" class="section" aria-labelledby="services-title">
       <div class="measure">
-        <h2 id="services-title" class="label">Services</h2>
+        <h2 id="services-title" class="section-label">
+          <span>02</span>
+          <span aria-hidden="true">&mdash;</span>
+          <span>What I Do</span>
+          <span class="section-label-rule" aria-hidden="true"></span>
+        </h2>
 
         <div class="mt-10 md:mt-12">
 
@@ -150,7 +172,12 @@
     <!-- ── Work ─────────────────────────────────────────── 1100px ─ -->
     <section id="work" class="section" aria-labelledby="work-title">
       <div class="measure-wide">
-        <h2 id="work-title" class="label">Work</h2>
+        <h2 id="work-title" class="section-label">
+          <span>03</span>
+          <span aria-hidden="true">&mdash;</span>
+          <span>Work</span>
+          <span class="section-label-rule" aria-hidden="true"></span>
+        </h2>
 
         <div class="work-grid mt-10 md:mt-12">
 
@@ -189,7 +216,12 @@
     <!-- ── Contact ──────────────────────────────────────────────── -->
     <section id="contact" class="section" aria-labelledby="contact-title">
       <div class="measure">
-        <h2 id="contact-title" class="label">Contact</h2>
+        <h2 id="contact-title" class="section-label">
+          <span>04</span>
+          <span aria-hidden="true">&mdash;</span>
+          <span>Contact</span>
+          <span class="section-label-rule" aria-hidden="true"></span>
+        </h2>
 
         <p class="mt-10 md:mt-12">
           Tell me what your business does and what you need, and I'll come back
