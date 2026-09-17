@@ -4,28 +4,31 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Farhan — websites and AI agents for small businesses in Perth</title>
+  <title>Naf — websites and AI agents for small businesses in Perth</title>
   <meta name="description" content="I build websites, AI agents and NFC review tags for small businesses in Perth. Most sites are up in about a week, with monthly support after launch." />
   <!-- PLACEHOLDER: swap https://example.com/ for your real domain, here and in the og:url below -->
   <link rel="canonical" href="https://example.com/" />
   <meta name="theme-color" content="#0D0C0B" />
+  <!-- Declared before the stylesheet parses, so the very first paint
+       uses the dark canvas instead of the browser default white. -->
+  <meta name="color-scheme" content="dark" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Farhan" />
-  <meta property="og:title" content="Farhan — websites and AI agents for small businesses in Perth" />
+  <meta property="og:site_name" content="Naf" />
+  <meta property="og:title" content="Naf — websites and AI agents for small businesses in Perth" />
   <meta property="og:description" content="I build websites, AI agents and NFC review tags for small businesses in Perth. Most sites are up in about a week, with monthly support after launch." />
   <meta property="og:url" content="https://example.com/" />
   <!-- PLACEHOLDER: swap assets/og-image.png for a real 1200x630 image, and make the URL absolute -->
   <meta property="og:image" content="https://example.com/assets/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Farhan — websites and AI agents for small businesses" />
+  <meta property="og:image:alt" content="Naf — websites and AI agents for small businesses" />
   <meta property="og:locale" content="en_AU" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Farhan — websites and AI agents for small businesses in Perth" />
+  <meta name="twitter:title" content="Naf — websites and AI agents for small businesses in Perth" />
   <meta name="twitter:description" content="I build websites, AI agents and NFC review tags for small businesses in Perth." />
   <meta name="twitter:image" content="https://example.com/assets/og-image.png" />
 
@@ -44,12 +47,21 @@
 <body>
   <a href="#hero" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-surface focus:px-4 focus:py-3">Skip to content</a>
 
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="wordmark" href="#hero">Naf<span class="wordmark-dot" aria-hidden="true"></span></a>
+    </div>
+  </header>
+
   <main class="page">
 
     <!-- ── Hero ─────────────────────────────────────────────────── -->
     <section id="hero" class="section" aria-labelledby="hero-title">
       <div class="measure">
-        <p class="label">Farhan</p>
+        <p class="status-pill">
+          <span class="status-dot" aria-hidden="true"></span>
+          Open for new work
+        </p>
 
         <h1 id="hero-title" class="h1 mt-8 md:mt-10">
           I build websites and AI agents for small businesses
@@ -64,28 +76,33 @@
     <!-- ── Story ────────────────────────────────────────────────── -->
     <section id="story" class="section" aria-labelledby="story-title">
       <div class="measure">
-        <h2 id="story-title" class="label">Story</h2>
+        <h2 id="story-title" class="section-label">
+          <span>01</span>
+          <span aria-hidden="true">&mdash;</span>
+          <span>The Story</span>
+          <span class="section-label-rule" aria-hidden="true"></span>
+        </h2>
 
         <div class="prose mt-10 md:mt-12">
           <p>
-            I came over from Bangladesh in 2023 to study. Pretty quickly I needed
-            money — properly needed it — and the obvious move was to pick up
-            casual shifts somewhere. I taught myself to build websites instead.
-            The first ones were for restaurants. They took me forever and they
-            were rough, but I finished them.
+            I came here in 2023 to study. Pretty quickly I needed money —
+            properly needed it — and the obvious move was to pick up casual
+            shifts somewhere. I taught myself to build websites instead. The
+            first ones were for restaurants. They took me forever and they were
+            rough, but I finished them.
           </p>
           <p>
-            Then I walked into a phone repair shop I had never been in before and
-            told them their website wasn't doing them any favours, and that I
-            could fix it. They said yes. That was the first time anyone paid me
-            for this.
+            Then I started going at businesses cold. Phone, email, whatever got
+            through. The first one who ever paid me I never met — no sit down,
+            nobody who knew me, nothing to show them at the time. Just the
+            pitch, and they said yes.
           </p>
           <p>
-            There are a lot of businesses around Perth with no website at all, or
-            one from ten years ago that nobody has touched since. I still work on
-            my own, I've built 30 of them now and I stay on with every client
-            month to month, and I can usually have something good up in about a
-            week. That's the job.
+            Most small businesses have nothing, or a site from ten years ago
+            that nobody has touched since. I work on my own, I've built 30 of
+            them now, some down the road and some on the other side of the
+            world, and I stay on with every client month to month. Usually I can
+            have something good up in about a week. That's the job.
           </p>
         </div>
       </div>
@@ -94,7 +111,12 @@
     <!-- ── Services ─────────────────────────────────────────────── -->
     <section id="services" class="section" aria-labelledby="services-title">
       <div class="measure">
-        <h2 id="services-title" class="label">Services</h2>
+        <h2 id="services-title" class="section-label">
+          <span>02</span>
+          <span aria-hidden="true">&mdash;</span>
+          <span>What I Do</span>
+          <span class="section-label-rule" aria-hidden="true"></span>
+        </h2>
 
         <div class="mt-10 md:mt-12">
 
@@ -150,36 +172,37 @@
     <!-- ── Work ─────────────────────────────────────────── 1100px ─ -->
     <section id="work" class="section" aria-labelledby="work-title">
       <div class="measure-wide">
-        <h2 id="work-title" class="label">Work</h2>
+        <h2 id="work-title" class="section-label">
+          <span>03</span>
+          <span aria-hidden="true">&mdash;</span>
+          <span>Work</span>
+          <span class="section-label-rule" aria-hidden="true"></span>
+        </h2>
 
         <div class="work-grid mt-10 md:mt-12">
 
           <article>
-            <!-- PLACEHOLDER: swap assets/work/site-01.svg for the real screenshot -->
-            <img class="work-shot" src="assets/work/site-01.svg" alt="Site name 01 homepage" width="1200" height="800" loading="lazy" decoding="async" />
-            <h3 class="h2 mt-6">Site name 01</h3>
-            <p class="label mt-2">Restaurant website</p>
+            <img class="work-shot" src="assets/work/site-01.jpg" alt="Pool maintenance company website homepage" width="1200" height="800" loading="lazy" decoding="async" />
+            <h3 class="h2 mt-6">Pool maintenance company</h3>
+            <p class="label mt-2">Website</p>
           </article>
 
           <article>
-            <!-- PLACEHOLDER: swap assets/work/site-02.svg for the real screenshot -->
-            <img class="work-shot" src="assets/work/site-02.svg" alt="Site name 02 homepage" width="1200" height="800" loading="lazy" decoding="async" />
-            <h3 class="h2 mt-6">Site name 02</h3>
-            <p class="label mt-2">Repair shop website</p>
+            <img class="work-shot" src="assets/work/site-02.jpg" alt="Men's barbershop website homepage" width="1200" height="800" loading="lazy" decoding="async" />
+            <h3 class="h2 mt-6">Men's barbershop</h3>
+            <p class="label mt-2">Website</p>
           </article>
 
           <article>
-            <!-- PLACEHOLDER: swap assets/work/site-03.svg for the real screenshot -->
-            <img class="work-shot" src="assets/work/site-03.svg" alt="Site name 03 homepage" width="1200" height="800" loading="lazy" decoding="async" />
-            <h3 class="h2 mt-6">Site name 03</h3>
-            <p class="label mt-2">Cafe website</p>
+            <img class="work-shot" src="assets/work/site-03.jpg" alt="Phone repair shop website homepage" width="1200" height="800" loading="lazy" decoding="async" />
+            <h3 class="h2 mt-6">Phone repair shop</h3>
+            <p class="label mt-2">Website</p>
           </article>
 
           <article>
-            <!-- PLACEHOLDER: swap assets/work/site-04.svg for the real screenshot -->
-            <img class="work-shot" src="assets/work/site-04.svg" alt="Site name 04 homepage" width="1200" height="800" loading="lazy" decoding="async" />
-            <h3 class="h2 mt-6">Site name 04</h3>
-            <p class="label mt-2">Salon website</p>
+            <img class="work-shot" src="assets/work/site-04.jpg" alt="Cafe website homepage" width="1200" height="800" loading="lazy" decoding="async" />
+            <h3 class="h2 mt-6">Cafe</h3>
+            <p class="label mt-2">Website</p>
           </article>
 
         </div>
@@ -189,7 +212,12 @@
     <!-- ── Contact ──────────────────────────────────────────────── -->
     <section id="contact" class="section" aria-labelledby="contact-title">
       <div class="measure">
-        <h2 id="contact-title" class="label">Contact</h2>
+        <h2 id="contact-title" class="section-label">
+          <span>04</span>
+          <span aria-hidden="true">&mdash;</span>
+          <span>Contact</span>
+          <span class="section-label-rule" aria-hidden="true"></span>
+        </h2>
 
         <p class="mt-10 md:mt-12">
           Tell me what your business does and what you need, and I'll come back
