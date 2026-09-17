@@ -12,7 +12,7 @@ contact form.
 index.html              the page — hero, story, services, work, contact
 src/styles.css          Tailwind source; the design system lives at the top
 assets/styles.css       compiled stylesheet (committed — the page loads this)
-assets/work/site-0*.svg work screenshot placeholders
+assets/work/site-0*.jpg work screenshots
 assets/og-image.png     social share image placeholder (1200×630)
 assets/favicon.svg      favicon placeholder
 assets/apple-touch-icon.png
@@ -25,7 +25,7 @@ each one in place.
 
 | What | Where | Swap in |
 |---|---|---|
-| Work screenshots | `assets/work/site-01.svg` … `site-04.svg` | Real screenshots. Keep the 3:2 shape, or the cards will crop them. Update the `src` and `alt` on each `<img>` in the work section. |
+| Work screenshots | `assets/work/site-01.jpg` … `site-04.jpg` | Real screenshots. Keep the 3:2 shape, or the cards will crop them. Update the `src` and `alt` on each `<img>` in the work section. |
 | Site names | Work section — `Site name 01` … `04` | The real business names. |
 | Type labels | Work section — `Restaurant website`, `Repair shop website`, `Cafe website`, `Salon website` | What each project actually was. |
 | Form endpoint | `<form action="https://formspree.io/f/YOUR-FORM-ID">` | Your real endpoint. Formspree, Web3Forms and Netlify Forms all take a plain POST like this one. |
