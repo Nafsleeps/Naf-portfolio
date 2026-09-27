@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<!--
+================================================================================
+  NZ REAL ESTATE AGENT: PORTFOLIO TEMPLATE
+  Single self-contained file: inline CSS + vanilla JS. Google Fonts only.
+
+  FIND AND REPLACE: every placeholder, in square brackets
+  ------------------------------------------------------------------------------
+  [AGENT NAME]        Full name of the agent (title, nav, footer, meta tags)
+  [FIRST NAME]        Hero line 1 and the intro sign-off
+  [LAST NAME]         Hero line 2
+  [AGENCY]            Agency / brand the agent is licensed with
+  [CITY]              Town or city the agent works in
+  [SUBURB 1]          Main suburbs (hero, services, listings, sold, reviews,
+  [SUBURB 2]            and the suburb dropdown in the appraisal form)
+  [SUBURB 3]
+  [PHONE]             Display phone number, e.g. 021 123 4567
+  [PHONE LINK]        Same number for tel: links, digits only with +64,
+                        e.g. +64211234567
+  [EMAIL]             Agent's email address (text and mailto: link)
+  [LICENCE NO.]       REAA licence number
+  [OFFICE ADDRESS]    Street address of the agency office
+  [X]                 Headline stat: average % above CV (stat section)
+  [YEAR]              Career timeline years (story section, 5 entries)
+  [NUMBER]            Number of homes sold (story section, stat caption)
+  [AWARD NAME]        Award named in the timeline
+  [SOCIAL URL]        Facebook / Instagram / LinkedIn links (footer)
+  [DOMAIN]            Live site URL (canonical + og:url in <head>)
+
+  SAMPLE CONTENT: realistic stand-ins, replace with the client's real data
+  ------------------------------------------------------------------------------
+  - Listing addresses, prices, bed/bath/car counts (Listings section)
+  - Sold addresses, sale results, % above CV badges (Sold section)
+  - Testimonial quotes and vendor names (Reviews section)
+  - Intro paragraphs (Story section): have the agent rewrite in their own voice
+
+  IMAGES
+  ------------------------------------------------------------------------------
+  Every image is a soft grey <div class="media"> with its aspect ratio set.
+  To use a real photo, put an <img> inside it; CSS makes it fill and crop:
+      <div class="media media--4x5">
+        <img src="https://..." alt="Describe the photo" />
+      </div>
+  Then remove role="img" and aria-label from the div (the img carries the alt).
+
+  BRAND
+  ------------------------------------------------------------------------------
+  All colours, fonts and spacing live in :root at the top of the <style> block.
+  Accent is sage by default; soft navy is commented out beside it.
+
+  FORM
+  ------------------------------------------------------------------------------
+  Front-end only. Search for "FORM ENDPOINT" in the script to plug in
+  Formspree (or any service that takes a POST).
+================================================================================
+-->
+<html lang="en-NZ">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>[AGENT NAME] | [AGENCY] | Real Estate in [CITY]</title>
+  <meta name="description" content="[AGENT NAME] helps [CITY] families sell and buy in [SUBURB 1], [SUBURB 2] and [SUBURB 3]. Book a free, no-obligation market appraisal." />
+  <link rel="canonical" href="https://[DOMAIN]/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="[AGENT NAME] | [AGENCY] | [CITY]" />
+  <meta property="og:description" content="Helping [CITY] families sell and buy with care. Book a free market appraisal." />
+  <meta property="og:url" content="https://[DOMAIN]/" />
+  <meta property="og:locale" content="en_NZ" />
+  <meta name="theme-color" content="#FAF9F6" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================================================
+       BRAND TOKENS: change the whole look from here
+       ========================================================================== */
+    :root {
+      /* Accent. --accent is decorative (lines, icons, dots).
+         --accent-ink is the darker shade used for text and buttons so they
+         pass WCAG AA on white. Soft navy passes as-is, so for navy set both
+         to #2F3E55 and --accent-soft to #EDF0F4. */
+      --accent: #7A8B74;          /* sage */
+      --accent-ink: #4E5D49;      /* sage, darkened for AA text contrast */
+      --accent-soft: #EEF1EC;     /* tint for soft panels */
+      /* --accent: #2F3E55; --accent-ink: #2F3E55; --accent-soft: #EDF0F4; */
+
+      --bg: #FAF9F6;              /* warm white page */
+      --surface: #FFFFFF;         /* cards */
+      --ink: #25272A;             /* headings and body */
+      --ink-soft: #5B5E58;        /* secondary text (6.4:1 on --bg) */
+      --line: #E4E2DC;            /* hairlines and borders */
+      --placeholder: #E8E7E3;     /* image placeholder grey */
+      --error: #A33A2C;           /* form errors (5.9:1 on white) */
+      --on-accent: #FFFFFF;
+
+      --font-serif: "Cormorant Garamond", "Playfair Display", Georgia, "Times New Roman", serif;
+      --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+      /* Spacing scale */
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-5: 1.5rem;
+      --space-6: 2rem;
+      --space-7: 3rem;
+      --space-8: 4rem;
+      --section-y: clamp(4.5rem, 10vw, 8rem);
+      --gutter: clamp(1.25rem, 5vw, 2.5rem);
+
+      --container: 1160px;
+      --measure: 38rem;
+      --radius: 14px;
+      --radius-sm: 8px;
+      --header-h: 72px;
+      --shadow: 0 1px 2px rgba(37, 39, 42, 0.04), 0 8px 24px rgba(37, 39, 42, 0.06);
+      --shadow-lift: 0 2px 4px rgba(37, 39, 42, 0.05), 0 18px 40px rgba(37, 39, 42, 0.10);
+      --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    /* ==========================================================================
+       BASE
+       ========================================================================== */
+    *, *::before, *::after { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    html { -webkit-text-size-adjust: 100%; }
+    @media (prefers-reduced-motion: no-preference) {
+      html { scroll-behavior: smooth; }
+    }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img, svg { display: block; max-width: 100%; }
+    h1, h2, h3 {
+      font-family: var(--font-serif);
+      font-weight: 500;
+      line-height: 1.1;
+      margin: 0;
+      letter-spacing: -0.01em;
+    }
+    p { margin: 0; }
+    a { color: var(--accent-ink); text-underline-offset: 3px; }
+    button, input, select, textarea { font: inherit; color: inherit; }
+    section[id] { scroll-margin-top: var(--header-h); }
+
+    :focus-visible {
+      outline: 2px solid var(--accent-ink);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    .visually-hidden {
+      position: absolute !important;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0 0 0 0);
+      white-space: nowrap; border: 0;
+    }
+    .skip-link {
+      position: absolute; left: var(--space-4); top: -100px; z-index: 100;
+      background: var(--ink); color: #fff; padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-sm); text-decoration: none;
+    }
+    .skip-link:focus { top: var(--space-4); }
+
+    .container {
+      width: 100%;
+      max-width: var(--container);
+      margin-inline: auto;
+      padding-inline: var(--gutter);
+    }
+    .section { padding-block: var(--section-y); }
+
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: var(--space-3);
+      font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--accent-ink);
+      margin-bottom: var(--space-4);
+    }
+    .eyebrow::before {
+      content: ""; width: 28px; height: 1px; background: var(--accent);
+    }
+    .section-title { font-size: clamp(2.1rem, 5vw, 3.1rem); }
+    .section-intro { color: var(--ink-soft); max-width: var(--measure); margin-top: var(--space-4); }
+    .section-head { margin-bottom: clamp(2.5rem, 6vw, 4rem); }
+    .section-head--center { text-align: center; }
+    .section-head--center .section-intro { margin-inline: auto; }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+      min-height: 48px;
+      padding: 0.75rem 1.6rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 0.95rem; font-weight: 500;
+      text-decoration: none;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background-color .25s var(--ease), color .25s var(--ease), border-color .25s var(--ease), transform .25s var(--ease);
+    }
+    .btn-primary { background: var(--accent-ink); color: var(--on-accent); }
+    .btn-primary:hover { background: var(--ink); }
+    .btn-secondary { background: transparent; color: var(--ink); border-color: var(--ink); }
+    .btn-secondary:hover { background: var(--ink); color: #fff; }
+    .btn-ghost { background: transparent; color: var(--ink-soft); padding-inline: var(--space-4); }
+    .btn-ghost:hover { color: var(--ink); }
+    .btn-sm { min-height: 42px; padding: 0.5rem 1.2rem; font-size: 0.9rem; }
+
+    /* Image placeholders: grey block with a set ratio; a child <img> fills it */
+    .media {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: var(--placeholder);
+      overflow: hidden;
+    }
+    .media::after {                      /* subtle tonal wash so blocks aren't flat */
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(160deg, rgba(255,255,255,0.35), rgba(255,255,255,0) 55%);
+      pointer-events: none;
+    }
+    .media > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .media--4x5 { aspect-ratio: 4 / 5; }
+    .media--3x2 { aspect-ratio: 3 / 2; }
+
+    /* Fade-up on scroll: only hidden once JS confirms it will reveal them */
+    .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+    .js .reveal.is-visible { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .js .reveal { opacity: 1; transform: none; transition: none; }
+      *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+    }
+
+    /* ==========================================================================
+       1. NAV
+       ========================================================================== */
+    .site-header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(250, 249, 246, 0.92);
+      backdrop-filter: saturate(140%) blur(10px);
+      -webkit-backdrop-filter: saturate(140%) blur(10px);
+      border-bottom: 1px solid transparent;
+      transition: border-color .3s var(--ease);
+    }
+    .site-header.is-scrolled { border-bottom-color: var(--line); }
+    .nav {
+      height: var(--header-h);
+      display: flex; align-items: center; justify-content: space-between; gap: var(--space-4);
+    }
+    .brand {
+      display: flex; flex-direction: column; line-height: 1.1;
+      text-decoration: none; color: var(--ink);
+      min-width: 0;
+    }
+    .brand-name { font-family: var(--font-serif); font-size: 1.45rem; font-weight: 600; white-space: nowrap; }
+    .brand-sub { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); white-space: nowrap; }
+    .nav-links { display: none; }
+    .nav-actions { display: flex; align-items: center; gap: var(--space-2); }
+    .nav-cta { display: none; }
+
+    .menu-toggle {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 44px; height: 44px;
+      background: none; border: 0; border-radius: 50%;
+      cursor: pointer; color: var(--ink);
+    }
+    .menu-toggle-bars { position: relative; width: 22px; height: 14px; }
+    .menu-toggle-bars span {
+      position: absolute; left: 0; width: 100%; height: 1.5px; background: currentColor;
+      transition: transform .3s var(--ease), opacity .2s var(--ease), top .3s var(--ease);
+    }
+    .menu-toggle-bars span:nth-child(1) { top: 0; }
+    .menu-toggle-bars span:nth-child(2) { top: 6px; }
+    .menu-toggle-bars span:nth-child(3) { top: 12px; }
+    .menu-toggle[aria-expanded="true"] .menu-toggle-bars span:nth-child(1) { top: 6px; transform: rotate(45deg); }
+    .menu-toggle[aria-expanded="true"] .menu-toggle-bars span:nth-child(2) { opacity: 0; }
+    .menu-toggle[aria-expanded="true"] .menu-toggle-bars span:nth-child(3) { top: 6px; transform: rotate(-45deg); }
+
+    .mobile-menu {
+      position: fixed; inset: var(--header-h) 0 auto 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 20px 30px rgba(37, 39, 42, 0.06);
+      padding: var(--space-4) var(--gutter) var(--space-6);
+    }
+    .mobile-menu[hidden] { display: none; }
+    .mobile-menu ul { list-style: none; margin: 0 0 var(--space-5); padding: 0; }
+    .mobile-menu a:not(.btn) {
+      display: block; padding: var(--space-3) 0;
+      font-family: var(--font-serif); font-size: 1.6rem;
+      color: var(--ink); text-decoration: none;
+      border-bottom: 1px solid var(--line);
+    }
+    .mobile-menu .btn { width: 100%; }
+
+    @media (min-width: 900px) {
+      .menu-toggle, .mobile-menu { display: none !important; }
+      .nav-links {
+        display: flex; gap: clamp(1.25rem, 2.5vw, 2.25rem);
+        list-style: none; margin: 0; padding: 0;
+      }
+      .nav-links a {
+        position: relative;
+        font-size: 0.92rem; color: var(--ink-soft); text-decoration: none;
+        padding-block: var(--space-2);
+        transition: color .2s var(--ease);
+      }
+      .nav-links a::after {
+        content: ""; position: absolute; left: 0; right: 0; bottom: 2px; height: 1px;
+        background: var(--accent); transform: scaleX(0); transform-origin: left;
+        transition: transform .3s var(--ease);
+      }
+      .nav-links a:hover, .nav-links a[aria-current="true"] { color: var(--ink); }
+      .nav-links a:hover::after, .nav-links a[aria-current="true"]::after { transform: scaleX(1); }
+      .nav-cta { display: inline-flex; }
+    }
+
+    /* ==========================================================================
+       2. HERO
+       ========================================================================== */
+    .hero { padding-block: clamp(2.5rem, 7vw, 6rem) var(--section-y); }
+    .hero-grid { display: grid; gap: clamp(2.5rem, 6vw, 5rem); align-items: center; }
+    .hero-title {
+      font-size: clamp(3.4rem, 13vw, 6.8rem);
+      font-weight: 400;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+    }
+    .hero-title span { display: block; }
+    .hero-title span + span { font-style: italic; color: var(--accent-ink); padding-left: 0.6em; }
+    .hero-tagline {
+      font-size: clamp(1.1rem, 2.4vw, 1.3rem);
+      color: var(--ink-soft);
+      max-width: 30rem;
+      margin-top: var(--space-5);
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
+    .hero-meta {
+      display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5);
+      margin-top: var(--space-6); padding-top: var(--space-5);
+      border-top: 1px solid var(--line);
+      font-size: 0.85rem; color: var(--ink-soft);
+    }
+    .hero-meta strong { color: var(--ink); font-weight: 500; }
+    .hero-portrait { position: relative; max-width: 460px; width: 100%; margin-inline: auto; }
+    .hero-portrait .media { border-radius: 200px 200px var(--radius) var(--radius); }
+    .hero-portrait-tag {
+      position: absolute; left: -0.5rem; bottom: 1.5rem;
+      background: var(--surface); box-shadow: var(--shadow);
+      border-radius: var(--radius-sm);
+      padding: var(--space-3) var(--space-4);
+      font-size: 0.8rem; line-height: 1.4;
+    }
+    .hero-portrait-tag strong { display: block; font-family: var(--font-serif); font-size: 1.15rem; font-weight: 600; }
+    @media (min-width: 900px) {
+      .hero-grid { grid-template-columns: 1.15fr 0.85fr; }
+      .hero-portrait-tag { left: -2rem; }
+    }
+
+    /* ==========================================================================
+       3. STORY + TIMELINE
+       ========================================================================== */
+    .story-grid { display: grid; gap: clamp(3rem, 7vw, 6rem); }
+    .story-copy p + p { margin-top: var(--space-4); }
+    .story-copy p { color: var(--ink-soft); font-size: 1.05rem; }
+    .story-copy .lead { color: var(--ink); font-family: var(--font-serif); font-size: clamp(1.4rem, 3vw, 1.7rem); line-height: 1.4; }
+    .signature { margin-top: var(--space-6); font-family: var(--font-serif); font-style: italic; font-size: 1.8rem; color: var(--accent-ink); }
+
+    .timeline { list-style: none; margin: 0; padding: 0; position: relative; }
+    .timeline::before {
+      content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px;
+      width: 1px; background: var(--line);
+    }
+    .timeline li { position: relative; padding-left: 2.5rem; }
+    .timeline li + li { margin-top: var(--space-6); }
+    .timeline li::before {
+      content: ""; position: absolute; left: 0; top: 6px;
+      width: 15px; height: 15px; border-radius: 50%;
+      background: var(--bg); border: 1px solid var(--accent);
+      box-shadow: inset 0 0 0 3px var(--bg), inset 0 0 0 8px var(--accent);
+    }
+    .timeline-year { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; color: var(--accent-ink); }
+    .timeline h3 { font-size: 1.45rem; margin-top: var(--space-1); }
+    .timeline p { color: var(--ink-soft); font-size: 0.95rem; margin-top: var(--space-1); }
+    @media (min-width: 900px) {
+      .story-grid { grid-template-columns: 1.1fr 0.9fr; }
+      .timeline { margin-top: 5.2rem; }
+    }
+
+    /* ==========================================================================
+       4. HEADLINE STAT
+       ========================================================================== */
+    .stat { background: var(--accent-soft); text-align: center; }
+    .stat-figure {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: clamp(5.5rem, 22vw, 11rem);
+      line-height: 1;
+      color: var(--accent-ink);
+      letter-spacing: -0.03em;
+    }
+    .stat-figure sup { font-size: 0.4em; vertical-align: top; position: relative; top: 0.35em; margin-left: 0.05em; }
+    .stat-label { font-family: var(--font-serif); font-size: clamp(1.5rem, 4vw, 2.2rem); margin-top: var(--space-4); }
+    .stat-note { color: var(--ink-soft); font-size: 0.85rem; margin-top: var(--space-4); max-width: 34rem; margin-inline: auto; }
+
+    /* ==========================================================================
+       5. SERVICES
+       ========================================================================== */
+    .services-grid { display: grid; gap: var(--space-4); }
+    .service-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: var(--space-6);
+      transition: border-color .3s var(--ease), transform .3s var(--ease);
+    }
+    .service-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .service-icon {
+      width: 52px; height: 52px; border-radius: 50%;
+      display: grid; place-items: center;
+      background: var(--accent-soft); color: var(--accent-ink);
+      margin-bottom: var(--space-5);
+    }
+    .service-icon svg { width: 24px; height: 24px; }
+    .service-card h3 { font-size: 1.55rem; }
+    .service-card p { color: var(--ink-soft); font-size: 0.95rem; margin-top: var(--space-3); }
+    @media (min-width: 640px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1040px) { .services-grid { grid-template-columns: repeat(4, 1fr); } }
+
+    /* ==========================================================================
+       6 + 7. PROPERTY CARDS (listings and sold)
+       ========================================================================== */
+    .section--tint { background: var(--surface); }
+    .head-row { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--space-4); }
+    .cards { display: grid; gap: var(--space-5); }
+    @media (min-width: 700px) { .cards { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1040px) { .cards { grid-template-columns: repeat(3, 1fr); } }
+
+    .property {
+      position: relative;
+      display: flex; flex-direction: column;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+    }
+    .property:hover, .property:focus-within { transform: translateY(-6px); box-shadow: var(--shadow-lift); }
+    .property .media { aspect-ratio: 3 / 2; }
+    .property-body { padding: var(--space-5) var(--space-5) var(--space-6); display: flex; flex-direction: column; flex: 1; }
+    .property-price { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-ink); }
+    .property h3 { font-size: 1.5rem; margin-top: var(--space-2); }
+    .property h3 a { color: inherit; text-decoration: none; }
+    .property h3 a::after { content: ""; position: absolute; inset: 0; } /* whole card clickable */
+    .property-suburb { color: var(--ink-soft); font-size: 0.92rem; }
+    .features {
+      display: flex; flex-wrap: wrap; gap: var(--space-5);
+      list-style: none; margin: auto 0 0; padding: var(--space-4) 0 0;
+      border-top: 1px solid var(--line);
+      font-size: 0.9rem; color: var(--ink-soft);
+    }
+    .property-suburb { margin-bottom: var(--space-5); }
+    .features li { display: inline-flex; align-items: center; gap: var(--space-2); }
+    .features svg { width: 20px; height: 20px; color: var(--accent-ink); }
+
+    .tag {
+      position: absolute; top: var(--space-4); z-index: 1;
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 0.4rem 0.8rem; border-radius: 999px;
+    }
+    .tag-sold { left: var(--space-4); background: var(--ink); color: #fff; }
+    .tag-cv { right: var(--space-4); background: var(--surface); color: var(--accent-ink); letter-spacing: 0.04em; text-transform: none; box-shadow: var(--shadow); }
+    .tag-new { left: var(--space-4); background: var(--surface); color: var(--ink); box-shadow: var(--shadow); }
+    .sold-result { display: flex; justify-content: space-between; gap: var(--space-4); margin-top: auto; padding-top: var(--space-4); border-top: 1px solid var(--line); font-size: 0.9rem; color: var(--ink-soft); }
+    .sold-result strong { display: block; color: var(--ink); font-weight: 500; }
+
+    /* ==========================================================================
+       8. TESTIMONIALS CAROUSEL
+       ========================================================================== */
+    .carousel { position: relative; max-width: 52rem; margin-inline: auto; text-align: center; }
+    .carousel-viewport { overflow: hidden; }
+    .carousel-track { display: flex; transition: transform .7s var(--ease); }
+    .slide { flex: 0 0 100%; margin: 0; padding-inline: var(--space-2); }
+    .quote-mark { font-family: var(--font-serif); font-size: 5rem; line-height: 0.6; color: var(--accent); height: 2.2rem; }
+    .slide blockquote { margin: 0; }
+    .slide blockquote p {
+      font-family: var(--font-serif);
+      font-size: clamp(1.45rem, 4vw, 2.2rem);
+      line-height: 1.35;
+    }
+    .stars { display: flex; justify-content: center; gap: 4px; color: var(--accent-ink); margin-top: var(--space-6); }
+    .stars svg { width: 16px; height: 16px; }
+    .slide figcaption { margin-top: var(--space-3); }
+    .slide cite { font-style: normal; font-weight: 500; }
+    .slide .suburb { display: block; color: var(--ink-soft); font-size: 0.88rem; }
+    .carousel-controls { display: flex; align-items: center; justify-content: center; gap: var(--space-4); margin-top: var(--space-6); }
+    .arrow {
+      width: 48px; height: 48px; border-radius: 50%;
+      border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+      display: grid; place-items: center; cursor: pointer;
+      transition: border-color .2s var(--ease), background-color .2s var(--ease);
+    }
+    .arrow:hover { border-color: var(--ink); }
+    .arrow svg { width: 18px; height: 18px; }
+    .dots { display: flex; gap: var(--space-1); }
+    .dot {
+      width: 28px; height: 28px; padding: 0; border: 0; background: none; cursor: pointer;
+      display: grid; place-items: center; border-radius: 50%;
+    }
+    .dot::before {
+      content: ""; width: 8px; height: 8px; border-radius: 999px;
+      background: var(--line); transition: background-color .3s var(--ease), width .3s var(--ease);
+    }
+    .dot[aria-current="true"]::before { background: var(--accent-ink); width: 20px; }
+    .dot[aria-current="true"] { width: 36px; }
+    .pause-toggle { font-size: 0.8rem; color: var(--ink-soft); background: none; border: 0; cursor: pointer; padding: var(--space-2); margin-top: var(--space-2); text-decoration: underline; text-underline-offset: 3px; }
+
+    /* ==========================================================================
+       9. APPRAISAL FORM
+       ========================================================================== */
+    .appraisal-grid { display: grid; gap: clamp(2.5rem, 6vw, 5rem); align-items: start; }
+    .appraisal-points { list-style: none; padding: 0; margin: var(--space-6) 0 0; }
+    .appraisal-points li { display: flex; gap: var(--space-3); padding-block: var(--space-3); border-top: 1px solid var(--line); color: var(--ink-soft); }
+    .appraisal-points li:last-child { border-bottom: 1px solid var(--line); }
+    .appraisal-points svg { flex: none; width: 20px; height: 20px; margin-top: 3px; color: var(--accent-ink); }
+    .appraisal-grid > *, .story-grid > *, .hero-grid > * { min-width: 0; }
+    .appraisal-contact { margin-top: var(--space-6); color: var(--ink-soft); font-size: 0.95rem; }
+    @media (min-width: 900px) { .appraisal-grid { grid-template-columns: 0.85fr 1.15fr; } }
+
+    .form-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: clamp(1.25rem, 5vw, 3rem);
+      box-shadow: var(--shadow);
+    }
+    .progress-meta { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--ink-soft); margin-bottom: var(--space-2); }
+    .progress-meta strong { color: var(--ink); font-weight: 500; }
+    .progress { height: 4px; background: var(--accent-soft); border-radius: 999px; overflow: hidden; }
+    .progress-bar { height: 100%; width: 33.33%; background: var(--accent-ink); border-radius: inherit; transition: width .5s var(--ease); }
+
+    .step { border: 0; margin: 0; padding: 0; min-width: 0; }
+    .step[hidden] { display: none; }
+    .step > legend { font-family: var(--font-serif); font-size: 1.8rem; padding: 0; margin: var(--space-6) 0 var(--space-5); }
+    .fields { display: grid; gap: var(--space-5); }
+    @media (min-width: 560px) { .fields-2 { grid-template-columns: 1fr 1fr; } }
+    .field label, .field .label { display: block; font-size: 0.88rem; font-weight: 500; margin-bottom: var(--space-2); }
+    .field .optional { color: var(--ink-soft); font-weight: 400; }
+    .input {
+      width: 100%; min-height: 50px;
+      padding: 0.75rem 1rem;
+      background: var(--bg);
+      border: 1px solid #C9C6BE;  /* 3:1+ against white for AA non-text contrast */
+      border-radius: var(--radius-sm);
+      transition: border-color .2s var(--ease), background-color .2s var(--ease);
+    }
+    .input:hover { border-color: var(--ink-soft); }
+    .input:focus { outline: none; border-color: var(--accent-ink); background: var(--surface); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .input:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 1px; }
+    select.input {
+      appearance: none; -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%235B5E58' stroke-width='1.5'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+    textarea.input { min-height: 120px; resize: vertical; }
+    .input[aria-invalid="true"] { border-color: var(--error); }
+    .error { display: block; color: var(--error); font-size: 0.82rem; margin-top: var(--space-2); }
+    .error:empty { display: none; }
+
+    .choice-group { border: 0; margin: 0; padding: 0; min-width: 0; }
+    .choice-group legend { padding: 0; }
+    .choices { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); }
+    .choice { position: relative; }
+    .choice input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+    .choice span {
+      display: flex; align-items: center; justify-content: center; text-align: center;
+      min-height: 50px; padding: var(--space-2) var(--space-3);
+      border: 1px solid #C9C6BE; border-radius: var(--radius-sm);
+      font-size: 0.92rem; background: var(--bg);
+      transition: border-color .2s var(--ease), background-color .2s var(--ease), color .2s var(--ease);
+    }
+    .choice input:hover + span { border-color: var(--ink-soft); }
+    .choice input:checked + span { border-color: var(--accent-ink); background: var(--accent-soft); color: var(--accent-ink); font-weight: 500; }
+    .choice input:focus-visible + span { outline: 2px solid var(--accent-ink); outline-offset: 2px; }
+    .choices[aria-invalid="true"] .choice span { border-color: var(--error); }
+
+    .form-nav { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-3); margin-top: var(--space-6); }
+    .form-nav .btn-primary { margin-left: auto; }
+    .form-fineprint { font-size: 0.8rem; color: var(--ink-soft); margin-top: var(--space-4); }
+
+    .thanks { text-align: center; padding-block: var(--space-6); }
+    .thanks[hidden] { display: none; }
+    .thanks-icon { width: 64px; height: 64px; margin: 0 auto var(--space-5); border-radius: 50%; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-ink); }
+    .thanks-icon svg { width: 28px; height: 28px; }
+    .thanks h3 { font-size: 2.2rem; }
+    .thanks p { color: var(--ink-soft); margin: var(--space-3) auto 0; max-width: 26rem; }
+    .thanks .btn { margin-top: var(--space-6); }
+
+    /* ==========================================================================
+       10. FOOTER
+       ========================================================================== */
+    .site-footer { background: var(--ink); color: #D9D7D1; padding-block: var(--space-8) var(--space-6); font-size: 0.92rem; }
+    .site-footer a { color: #fff; text-decoration: none; }
+    .site-footer a:hover { text-decoration: underline; }
+    .footer-grid { display: grid; gap: var(--space-6); }
+    .footer-brand .brand-name { color: #fff; font-size: 1.9rem; }
+    .footer-brand p { margin-top: var(--space-3); max-width: 22rem; color: #BEBBB4; }
+    .footer-heading { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #BEBBB4; margin: 0 0 var(--space-3); font-family: var(--font-sans); }
+    .footer-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2); }
+    .footer-list address { font-style: normal; }
+    .footer-list, .appraisal-contact { overflow-wrap: anywhere; }
+    .socials { display: flex; gap: var(--space-2); margin-top: var(--space-4); }
+    .socials a {
+      width: 44px; height: 44px; border-radius: 50%;
+      display: grid; place-items: center;
+      border: 1px solid rgba(255,255,255,0.22);
+      transition: border-color .2s var(--ease), background-color .2s var(--ease);
+    }
+    .socials a:hover { border-color: #fff; background: rgba(255,255,255,0.06); }
+    .socials svg { width: 18px; height: 18px; }
+    .site-footer :focus-visible { outline-color: #fff; }
+    .footer-bottom {
+      display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-3);
+      margin-top: var(--space-7); padding-top: var(--space-5);
+      border-top: 1px solid rgba(255,255,255,0.14);
+      font-size: 0.8rem; color: #BEBBB4;
+    }
+    @media (min-width: 760px) { .footer-grid { grid-template-columns: 1.4fr 1fr 1fr; } }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ======================================================================
+       1. NAV
+       ====================================================================== -->
+  <header class="site-header" id="top">
+    <nav class="nav container" aria-label="Main">
+      <a class="brand" href="#home">
+        <span class="brand-name">[AGENT NAME]</span>
+        <span class="brand-sub">[AGENCY] · [CITY]</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#listings">Listings</a></li>
+        <li><a href="#sold">Sold</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a class="btn btn-primary btn-sm nav-cta" href="#appraisal">Book Appraisal</a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu">
+          <span class="visually-hidden">Menu</span>
+          <span class="menu-toggle-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+        </button>
+      </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobile-menu" hidden>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#listings">Listings</a></li>
+        <li><a href="#sold">Sold</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+      </ul>
+      <a class="btn btn-primary" href="#appraisal">Book Appraisal</a>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ====================================================================
+         2. HERO
+         ==================================================================== -->
+    <section class="hero" id="home" aria-labelledby="hero-title">
+      <div class="container hero-grid">
+        <div class="reveal">
+          <p class="eyebrow">[AGENCY] · [CITY]</p>
+          <h1 class="hero-title" id="hero-title">
+            <span>[FIRST NAME]</span>
+            <span>[LAST NAME]</span>
+          </h1>
+          <p class="hero-tagline">Helping [CITY] families sell and buy their homes with honesty, care and a calm hand at every step.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#appraisal">Book a Free Appraisal</a>
+            <a class="btn btn-secondary" href="#listings">View Listings</a>
+          </div>
+          <p class="hero-meta">
+            <span>Specialising in <strong>[SUBURB 1]</strong>, <strong>[SUBURB 2]</strong> &amp; <strong>[SUBURB 3]</strong></span>
+          </p>
+        </div>
+
+        <div class="hero-portrait reveal">
+          <!-- IMAGE: agent portrait, portrait orientation (4:5) -->
+          <div class="media media--4x5" role="img" aria-label="Portrait of [AGENT NAME]"></div>
+          <p class="hero-portrait-tag">
+            <strong>[NUMBER]+ homes sold</strong>
+            across [CITY]
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         3. STORY + TIMELINE
+         ==================================================================== -->
+    <section class="section section--tint" id="about" aria-labelledby="about-title">
+      <div class="container story-grid">
+        <div class="story-copy reveal">
+          <p class="eyebrow">My story</p>
+          <h2 class="section-title" id="about-title">A little about me</h2>
+          <div style="margin-top: var(--space-6);">
+            <p class="lead">I've called [CITY] home for most of my life, and I still get a lump in my throat handing over keys.</p>
+            <p>Before real estate I worked in a job where listening mattered more than talking, and that's stayed with me. Selling a home is rarely just about the property. It's about what comes next for your family, and getting that right takes patience and plain, honest advice.</p>
+            <p>I keep my client list small on purpose, so every vendor gets me, not a junior. You'll hear from me every week, whether the news is good or not, and I'll never push you towards a price or a timeframe that doesn't suit you.</p>
+            <p>If you're even thinking about selling, I'd love to have a cuppa and talk it through. No pressure, no obligation.</p>
+          </div>
+          <p class="signature">[FIRST NAME]</p>
+        </div>
+
+        <ol class="timeline reveal" aria-label="Career milestones">
+          <li>
+            <span class="timeline-year">[YEAR]</span>
+            <h3>Started in real estate</h3>
+            <p>Began as a sales associate in [CITY], learning the ropes from some of the best in the business.</p>
+          </li>
+          <li>
+            <span class="timeline-year">[YEAR]</span>
+            <h3>Joined [AGENCY]</h3>
+            <p>Found a team that shares my belief in doing things properly, for vendors and buyers alike.</p>
+          </li>
+          <li>
+            <span class="timeline-year">[YEAR]</span>
+            <h3>100th home sold</h3>
+            <p>A milestone reached almost entirely through referrals and repeat clients.</p>
+          </li>
+          <li>
+            <span class="timeline-year">[YEAR]</span>
+            <h3>[AWARD NAME]</h3>
+            <p>Recognised for results and client satisfaction across the [AGENCY] network.</p>
+          </li>
+          <li>
+            <span class="timeline-year">[YEAR]</span>
+            <h3>[SUBURB 1] specialist</h3>
+            <p>Now one of the most active agents in [SUBURB 1], [SUBURB 2] and [SUBURB 3].</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         4. HEADLINE STAT
+         ==================================================================== -->
+    <section class="section stat" aria-labelledby="stat-title">
+      <div class="container reveal">
+        <p class="eyebrow">Results</p>
+        <h2 class="visually-hidden" id="stat-title">Average sale result</h2>
+        <p class="stat-figure">[X]<sup>%</sup></p>
+        <p class="stat-label">Homes sell on average [X]% above CV</p>
+        <p class="stat-note">Average across my sales in [SUBURB 1], [SUBURB 2] and [SUBURB 3] over the last [NUMBER] months, compared with each property's council valuation (CV).</p>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         5. SERVICES
+         ==================================================================== -->
+    <section class="section" id="services" aria-labelledby="services-title">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">How I can help</p>
+          <h2 class="section-title" id="services-title">Services</h2>
+          <p class="section-intro">Whether you're selling the family home or buying your very first, you'll get the same care and attention.</p>
+        </div>
+
+        <div class="services-grid">
+          <article class="service-card reveal">
+            <div class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h14V9.5"/><path d="M10 20v-5h4v5"/></svg>
+            </div>
+            <h3>Selling Your Home</h3>
+            <p>A clear plan from preparation to settlement: pricing, presentation, marketing and negotiation, all handled with you.</p>
+          </article>
+          <article class="service-card reveal">
+            <div class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="M8.5 15.5l2.5-2.5 2 2 3-3.5"/></svg>
+            </div>
+            <h3>Free Market Appraisals</h3>
+            <p>An honest, evidence-based view of what your home could sell for, with recent sales and CV/RV comparisons.</p>
+          </article>
+          <article class="service-card reveal">
+            <div class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9"/><path d="M17 6l2 2"/><path d="M15 8l2 2"/></svg>
+            </div>
+            <h3>First-Home Buyers</h3>
+            <p>Plain-English guidance on KiwiSaver, pre-approval, LIMs and building reports, so you buy with confidence.</p>
+          </article>
+          <article class="service-card reveal">
+            <div class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg>
+            </div>
+            <h3>New to NZ</h3>
+            <p>Moving to [CITY]? I'll help you understand how buying works here and which suburbs suit your family.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         6. CURRENT LISTINGS (sample data: replace with the client's real listings)
+         ==================================================================== -->
+    <section class="section section--tint" id="listings" aria-labelledby="listings-title">
+      <div class="container">
+        <div class="section-head head-row reveal">
+          <div>
+            <p class="eyebrow">For sale</p>
+            <h2 class="section-title" id="listings-title">Current listings</h2>
+          </div>
+          <a class="btn btn-secondary btn-sm" href="#appraisal">Thinking of selling?</a>
+        </div>
+
+        <div class="cards">
+          <article class="property reveal">
+            <span class="tag tag-new">New listing</span>
+            <!-- IMAGE: listing photo (3:2) -->
+            <div class="media media--3x2" role="img" aria-label="Front of 14 Kōwhai Rise, a weatherboard family home"></div>
+            <div class="property-body">
+              <p class="property-price">Price by negotiation</p>
+              <h3><a href="#">14 Kōwhai Rise</a></h3>
+              <p class="property-suburb">[SUBURB 1], [CITY]</p>
+              <ul class="features">
+                <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18V7"/><path d="M3 14h18v4"/><path d="M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="11" r="1.5"/></svg>4<span class="visually-hidden"> bedrooms</span></li>
+                <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16v3a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-3z"/><path d="M6 12V6a2 2 0 0 1 4 0"/><path d="M7 19l-1 2M17 19l1 2"/></svg>2<span class="visually-hidden"> bathrooms</span></li>
+                <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 16V11l2-5h10l2 5v5"/><path d="M3 16h18v2H3z"/><circle cx="7.5" cy="13.5" r="0.8"/><circle cx="16.5" cy="13.5" r="0.8"/></svg>2<span class="visually-hidden"> car parks</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="property reveal">
+            <!-- IMAGE: listing photo (3:2) -->
+            <div class="media media--3x2" role="img" aria-label="Sunny living room at 7/32 Harbour View Road"></div>
+            <div class="property-body">
+              <p class="property-price">Asking $895,000</p>
+              <h3><a href="#">7/32 Harbour View Road</a></h3>
+              <p class="property-suburb">[SUBURB 2], [CITY]</p>
+              <ul class="features">
+                <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18V7"/><path d="M3 14h18v4"/><path d="M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="11" r="1.5"/></svg>3<span class="visually-hidden"> bedrooms</span></li>
+                <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16v3a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-3z"/><path d="M6 12V6a2 2 0 0 1 4 0"/><path d="M7 19l-1 2M17 19l1 2"/></svg>2<span class="visually-hidden"> bathrooms</span></li>
+                <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 16V11l2-5h10l2 5v5"/><path d="M3 16h18v2H3z"/><circle cx="7.5" cy="13.5" r="0.8"/><circle cx="16.5" cy="13.5" r="0.8"/></svg>1<span class="visually-hidden"> car park</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="property reveal">
+            <!-- IMAGE: listing photo (3:2) -->
+            <div class="media media--3x2" role="img" aria-label="Garden and deck at 3 Tōtara Close"></div>
+            <div class="property-body">
+              <p class="property-price">Auction · Sat 18 Oct, 1pm</p>
+              <h3><a href="#">3 Tōtara Close</a></h3>
+              <p class="property-suburb">[SUBURB 3], [CITY]</p>
+              <ul class="features">
+                <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18V7"/><path d="M3 14h18v4"/><path d="M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="11" r="1.5"/></svg>5<span class="visually-hidden"> bedrooms</span></li>
+                <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16v3a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-3z"/><path d="M6 12V6a2 2 0 0 1 4 0"/><path d="M7 19l-1 2M17 19l1 2"/></svg>3<span class="visually-hidden"> bathrooms</span></li>
+                <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 16V11l2-5h10l2 5v5"/><path d="M3 16h18v2H3z"/><circle cx="7.5" cy="13.5" r="0.8"/><circle cx="16.5" cy="13.5" r="0.8"/></svg>2<span class="visually-hidden"> car parks</span></li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         7. SOLD RESULTS (sample data: replace with the client's real results)
+         ==================================================================== -->
+    <section class="section" id="sold" aria-labelledby="sold-title">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Recent results</p>
+          <h2 class="section-title" id="sold-title">Recently sold</h2>
+          <p class="section-intro">A few of the families I've helped move on lately. Every sale is compared with the property's CV, so you can see the result for yourself.</p>
+        </div>
+
+        <div class="cards">
+          <article class="property reveal">
+            <span class="tag tag-sold">Sold</span>
+            <span class="tag tag-cv">9% above CV</span>
+            <!-- IMAGE: sold property photo (3:2) -->
+            <div class="media media--3x2" role="img" aria-label="Exterior of 22 Rimu Street"></div>
+            <div class="property-body">
+              <h3>22 Rimu Street</h3>
+              <p class="property-suburb">[SUBURB 1], [CITY]</p>
+              <div class="sold-result">
+                <span>Method<strong>Auction</strong></span>
+                <span>Days on market<strong>19</strong></span>
+              </div>
+            </div>
+          </article>
+
+          <article class="property reveal">
+            <span class="tag tag-sold">Sold</span>
+            <span class="tag tag-cv">12% above CV</span>
+            <!-- IMAGE: sold property photo (3:2) -->
+            <div class="media media--3x2" role="img" aria-label="Exterior of 5 Pōhutukawa Place"></div>
+            <div class="property-body">
+              <h3>5 Pōhutukawa Place</h3>
+              <p class="property-suburb">[SUBURB 2], [CITY]</p>
+              <div class="sold-result">
+                <span>Method<strong>Deadline sale</strong></span>
+                <span>Days on market<strong>24</strong></span>
+              </div>
+            </div>
+          </article>
+
+          <article class="property reveal">
+            <span class="tag tag-sold">Sold</span>
+            <span class="tag tag-cv">6% above CV</span>
+            <!-- IMAGE: sold property photo (3:2) -->
+            <div class="media media--3x2" role="img" aria-label="Exterior of 48 Mānuka Avenue"></div>
+            <div class="property-body">
+              <h3>48 Mānuka Avenue</h3>
+              <p class="property-suburb">[SUBURB 3], [CITY]</p>
+              <div class="sold-result">
+                <span>Method<strong>By negotiation</strong></span>
+                <span>Days on market<strong>31</strong></span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         8. TESTIMONIALS (sample quotes: replace with real vendor reviews)
+         ==================================================================== -->
+    <section class="section section--tint" id="reviews" aria-labelledby="reviews-title">
+      <div class="container">
+        <div class="section-head section-head--center reveal">
+          <p class="eyebrow">Kind words</p>
+          <h2 class="section-title" id="reviews-title">What vendors say</h2>
+        </div>
+
+        <div class="carousel reveal" aria-roledescription="carousel" aria-label="Vendor testimonials">
+          <div class="carousel-viewport">
+            <div class="carousel-track" aria-live="off">
+              <figure class="slide" role="group" aria-roledescription="slide" aria-label="1 of 4">
+                <div class="quote-mark" aria-hidden="true">&ldquo;</div>
+                <blockquote><p>[FIRST NAME] made what we thought would be the most stressful few months of our lives feel calm. Honest from day one, and the result was well above what we hoped for.</p></blockquote>
+                <div class="stars" role="img" aria-label="Rated 5 out of 5"><!-- stars injected by JS --></div>
+                <figcaption><cite>Sarah &amp; Tom W.</cite><span class="suburb">Vendors, [SUBURB 1]</span></figcaption>
+              </figure>
+              <figure class="slide" role="group" aria-roledescription="slide" aria-label="2 of 4">
+                <div class="quote-mark" aria-hidden="true">&ldquo;</div>
+                <blockquote><p>We'd had three appraisals. [FIRST NAME] was the only one who explained the numbers properly and never once oversold. We sold in under three weeks.</p></blockquote>
+                <div class="stars" role="img" aria-label="Rated 5 out of 5"></div>
+                <figcaption><cite>Priya K.</cite><span class="suburb">Vendor, [SUBURB 2]</span></figcaption>
+              </figure>
+              <figure class="slide" role="group" aria-roledescription="slide" aria-label="3 of 4">
+                <div class="quote-mark" aria-hidden="true">&ldquo;</div>
+                <blockquote><p>Selling Mum's house was emotional. [FIRST NAME] treated it, and us, with real kindness, and kept every single promise.</p></blockquote>
+                <div class="stars" role="img" aria-label="Rated 5 out of 5"></div>
+                <figcaption><cite>Mere &amp; James T.</cite><span class="suburb">Vendors, [SUBURB 3]</span></figcaption>
+              </figure>
+              <figure class="slide" role="group" aria-roledescription="slide" aria-label="4 of 4">
+                <div class="quote-mark" aria-hidden="true">&ldquo;</div>
+                <blockquote><p>Weekly updates, straight answers and a brilliant auction day. We'd recommend [FIRST NAME] to anyone in [CITY] without hesitation.</p></blockquote>
+                <div class="stars" role="img" aria-label="Rated 5 out of 5"></div>
+                <figcaption><cite>David L.</cite><span class="suburb">Vendor, [SUBURB 1]</span></figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <div class="carousel-controls">
+            <button class="arrow" type="button" data-dir="-1" aria-label="Previous testimonial">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+            </button>
+            <div class="dots" role="group" aria-label="Choose testimonial"></div>
+            <button class="arrow" type="button" data-dir="1" aria-label="Next testimonial">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+          <button class="pause-toggle" type="button" hidden>Pause auto-play</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         9. BOOK AN APPRAISAL
+         ==================================================================== -->
+    <section class="section" id="appraisal" aria-labelledby="appraisal-title">
+      <div class="container appraisal-grid">
+        <div class="reveal">
+          <p class="eyebrow">Free, no obligation</p>
+          <h2 class="section-title" id="appraisal-title">Book a free appraisal</h2>
+          <p class="section-intro">Find out what your home could sell for in today's market. It takes about a minute, and I'll be in touch within one working day.</p>
+          <ul class="appraisal-points">
+            <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>A written appraisal backed by recent local sales</li>
+            <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Honest advice on presentation and timing</li>
+            <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>No pressure to list, ever</li>
+          </ul>
+          <p class="appraisal-contact">Prefer to talk? Call <a href="tel:[PHONE LINK]">[PHONE]</a> or email <a href="mailto:[EMAIL]">[EMAIL]</a>.</p>
+        </div>
+
+        <div class="form-card reveal">
+          <!-- action is only used if JS is disabled; see FORM ENDPOINT in the script -->
+          <form id="appraisal-form" action="#" method="post" novalidate>
+            <div class="progress-wrap">
+              <p class="progress-meta" aria-hidden="true"><strong id="step-count">Step 1 of 3</strong><span id="step-name">Your property</span></p>
+              <div class="progress" role="progressbar" aria-label="Form progress" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1" aria-valuetext="Step 1 of 3: Your property">
+                <div class="progress-bar"></div>
+              </div>
+            </div>
+
+            <!-- Step 1 -->
+            <fieldset class="step" data-step="1" data-name="Your property">
+              <legend>Tell me about your property</legend>
+              <div class="fields">
+                <div class="field">
+                  <label for="address">Property address</label>
+                  <input class="input" id="address" name="address" type="text" autocomplete="street-address" required aria-describedby="address-error" placeholder="e.g. 12 Kauri Street" />
+                  <span class="error" id="address-error" aria-live="polite"></span>
+                </div>
+                <div class="fields fields-2">
+                  <div class="field">
+                    <label for="suburb">Suburb</label>
+                    <select class="input" id="suburb" name="suburb" required aria-describedby="suburb-error">
+                      <option value="">Select a suburb</option>
+                      <option>[SUBURB 1]</option>
+                      <option>[SUBURB 2]</option>
+                      <option>[SUBURB 3]</option>
+                      <option>Other</option>
+                    </select>
+                    <span class="error" id="suburb-error" aria-live="polite"></span>
+                  </div>
+                  <div class="field">
+                    <label for="type">Property type</label>
+                    <select class="input" id="type" name="property_type" required aria-describedby="type-error">
+                      <option value="">Select a type</option>
+                      <option>House</option>
+                      <option>Townhouse</option>
+                      <option>Apartment</option>
+                      <option>Unit</option>
+                      <option>Section</option>
+                      <option>Lifestyle property</option>
+                    </select>
+                    <span class="error" id="type-error" aria-live="polite"></span>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- Step 2 -->
+            <fieldset class="step" data-step="2" data-name="Details" hidden>
+              <legend>A few details</legend>
+              <div class="fields">
+                <div class="fields fields-2">
+                  <div class="field">
+                    <label for="bedrooms">Bedrooms</label>
+                    <select class="input" id="bedrooms" name="bedrooms" required aria-describedby="bedrooms-error">
+                      <option value="">Select</option>
+                      <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6+</option>
+                    </select>
+                    <span class="error" id="bedrooms-error" aria-live="polite"></span>
+                  </div>
+                  <div class="field">
+                    <label for="bathrooms">Bathrooms</label>
+                    <select class="input" id="bathrooms" name="bathrooms" required aria-describedby="bathrooms-error">
+                      <option value="">Select</option>
+                      <option>1</option><option>2</option><option>3</option><option>4+</option>
+                    </select>
+                    <span class="error" id="bathrooms-error" aria-live="polite"></span>
+                  </div>
+                </div>
+                <fieldset class="field choice-group" aria-describedby="timeframe-error">
+                  <legend class="label">When are you thinking of selling?</legend>
+                  <div class="choices" id="timeframe-group">
+                    <label class="choice"><input type="radio" name="timeframe" value="ASAP" required /><span>ASAP</span></label>
+                    <label class="choice"><input type="radio" name="timeframe" value="Within 3 months" /><span>3 months</span></label>
+                    <label class="choice"><input type="radio" name="timeframe" value="6+ months" /><span>6+ months</span></label>
+                    <label class="choice"><input type="radio" name="timeframe" value="Just curious" /><span>Just curious</span></label>
+                  </div>
+                  <span class="error" id="timeframe-error" aria-live="polite"></span>
+                </fieldset>
+              </div>
+            </fieldset>
+
+            <!-- Step 3 -->
+            <fieldset class="step" data-step="3" data-name="Your details" hidden>
+              <legend>How can I reach you?</legend>
+              <div class="fields">
+                <div class="field">
+                  <label for="name">Full name</label>
+                  <input class="input" id="name" name="name" type="text" autocomplete="name" required aria-describedby="name-error" />
+                  <span class="error" id="name-error" aria-live="polite"></span>
+                </div>
+                <div class="fields fields-2">
+                  <div class="field">
+                    <label for="email">Email</label>
+                    <input class="input" id="email" name="email" type="email" autocomplete="email" required aria-describedby="email-error" />
+                    <span class="error" id="email-error" aria-live="polite"></span>
+                  </div>
+                  <div class="field">
+                    <label for="phone">Phone</label>
+                    <input class="input" id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required aria-describedby="phone-error" placeholder="e.g. 021 123 4567" />
+                    <span class="error" id="phone-error" aria-live="polite"></span>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="notes">Anything else I should know? <span class="optional">(optional)</span></label>
+                  <textarea class="input" id="notes" name="notes" rows="4"></textarea>
+                </div>
+              </div>
+              <p class="form-fineprint">Your details are only used to arrange your appraisal. I'll never share them.</p>
+            </fieldset>
+
+            <div class="form-nav">
+              <button class="btn btn-ghost" type="button" id="prev-step" hidden>&larr; Back</button>
+              <button class="btn btn-primary" type="button" id="next-step">Continue</button>
+              <button class="btn btn-primary" type="submit" id="submit-form" hidden>Request appraisal</button>
+            </div>
+          </form>
+
+          <div class="thanks" id="thanks" hidden tabindex="-1">
+            <div class="thanks-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+            </div>
+            <h3>Thank you<span id="thanks-name"></span></h3>
+            <p>I've received your appraisal request and will be in touch within one working day to find a time that suits you.</p>
+            <a class="btn btn-secondary" href="#listings">Browse current listings</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======================================================================
+       10. FOOTER
+       ====================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="brand-name">[AGENT NAME]</span>
+          <p>[AGENCY]<br />Licensed REAA 2008<br />Licence no. [LICENCE NO.]</p>
+          <div class="socials">
+            <a href="[SOCIAL URL]" aria-label="[AGENT NAME] on Facebook">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"/></svg>
+            </a>
+            <a href="[SOCIAL URL]" aria-label="[AGENT NAME] on Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.6" fill="currentColor"/></svg>
+            </a>
+            <a href="[SOCIAL URL]" aria-label="[AGENT NAME] on LinkedIn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M8 10.5V16"/><circle cx="8" cy="7.8" r="0.6" fill="currentColor"/><path d="M12 16v-5.5M12 13a2.5 2.5 0 0 1 5 0v3"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="footer-heading">Contact</h2>
+          <ul class="footer-list">
+            <li><a href="tel:[PHONE LINK]">[PHONE]</a></li>
+            <li><a href="mailto:[EMAIL]">[EMAIL]</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="footer-heading">Office</h2>
+          <ul class="footer-list">
+            <li><address>[AGENCY]<br />[OFFICE ADDRESS]<br />[CITY]</address></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; <span id="year">2026</span> [AGENT NAME]. All rights reserved.</p>
+        <p>[AGENCY] · Licensed REAA 2008</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    'use strict';
+
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.documentElement.classList.add('js');
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* ------------------------------------------------------------------
+       Sticky header border + mobile menu
+       ------------------------------------------------------------------ */
+    var header = document.querySelector('.site-header');
+    var toggle = document.querySelector('.menu-toggle');
+    var menu = document.getElementById('mobile-menu');
+
+    function onScroll() { header.classList.toggle('is-scrolled', window.scrollY > 8); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    function setMenu(open) {
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.querySelector('.visually-hidden').textContent = open ? 'Close menu' : 'Menu';
+      menu.hidden = !open;
+    }
+    toggle.addEventListener('click', function () {
+      setMenu(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+    menu.addEventListener('click', function (e) {
+      if (e.target.closest('a')) setMenu(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !menu.hidden) { setMenu(false); toggle.focus(); }
+    });
+    window.matchMedia('(min-width: 900px)').addEventListener('change', function (mq) {
+      if (mq.matches) setMenu(false);
+    });
+
+    /* Smooth scroll for in-page links; moves focus for keyboard users */
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest('a[href^="#"]');
+      if (!link) return;
+      var id = link.getAttribute('href');
+      if (id.length < 2) { e.preventDefault(); return; } // sample "#" links
+      var target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+      if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+      target.focus({ preventScroll: true });
+      history.pushState(null, '', id);
+    });
+
+    /* Highlight the nav link for the section in view */
+    var navLinks = document.querySelectorAll('.nav-links a');
+    if ('IntersectionObserver' in window) {
+      var spy = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          navLinks.forEach(function (a) {
+            if (a.getAttribute('href') === '#' + entry.target.id) a.setAttribute('aria-current', 'true');
+            else a.removeAttribute('aria-current');
+          });
+        });
+      }, { rootMargin: '-45% 0px -50% 0px' });
+      ['home', 'about', 'listings', 'sold', 'reviews'].forEach(function (id) {
+        spy.observe(document.getElementById(id));
+      });
+    }
+
+    /* ------------------------------------------------------------------
+       Fade-up on scroll
+       ------------------------------------------------------------------ */
+    var reveals = document.querySelectorAll('.reveal');
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      reveals.forEach(function (el) { el.classList.add('is-visible'); });
+    } else {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) { entry.target.classList.add('is-visible'); io.unobserve(entry.target); }
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+      reveals.forEach(function (el) { io.observe(el); });
+    }
+
+    /* ------------------------------------------------------------------
+       Testimonials carousel
+       ------------------------------------------------------------------ */
+    (function () {
+      var root = document.querySelector('.carousel');
+      var track = root.querySelector('.carousel-track');
+      var slides = root.querySelectorAll('.slide');
+      var dotsWrap = root.querySelector('.dots');
+      var pauseBtn = root.querySelector('.pause-toggle');
+      var INTERVAL = 7000;
+      var index = 0, timer = null, userPaused = false, hovering = false;
+
+      var star = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg>';
+      root.querySelectorAll('.stars').forEach(function (el) { el.innerHTML = star + star + star + star + star; });
+
+      slides.forEach(function (_, i) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'dot';
+        b.setAttribute('aria-label', 'Show testimonial ' + (i + 1));
+        b.addEventListener('click', function () { go(i); });
+        dotsWrap.appendChild(b);
+      });
+      var dots = dotsWrap.querySelectorAll('.dot');
+
+      function go(i) {
+        index = (i + slides.length) % slides.length;
+        track.style.transform = 'translateX(' + (-100 * index) + '%)';
+        slides.forEach(function (s, n) {
+          var active = n === index;
+          s.setAttribute('aria-hidden', String(!active));
+          s.inert = !active;
+        });
+        dots.forEach(function (d, n) {
+          if (n === index) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current');
+        });
+      }
+      function start() {
+        stop();
+        if (reduceMotion || userPaused || hovering) return;
+        timer = setInterval(function () { go(index + 1); }, INTERVAL);
+      }
+      function stop() { clearInterval(timer); timer = null; }
+
+      root.querySelectorAll('.arrow').forEach(function (btn) {
+        btn.addEventListener('click', function () { go(index + Number(btn.dataset.dir)); start(); });
+      });
+      // Pause on hover and while keyboard focus is inside
+      root.addEventListener('mouseenter', function () { hovering = true; stop(); });
+      root.addEventListener('mouseleave', function () { hovering = false; start(); });
+      root.addEventListener('focusin', function () { stop(); track.setAttribute('aria-live', 'polite'); });
+      root.addEventListener('focusout', function (e) {
+        if (!root.contains(e.relatedTarget)) { track.setAttribute('aria-live', 'off'); start(); }
+      });
+      // Swipe on touch screens
+      var x0 = null;
+      track.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; stop(); }, { passive: true });
+      track.addEventListener('touchend', function (e) {
+        if (x0 === null) return;
+        var dx = e.changedTouches[0].clientX - x0;
+        if (Math.abs(dx) > 40) go(index + (dx < 0 ? 1 : -1));
+        x0 = null; start();
+      });
+      // Visible pause control (WCAG 2.2.2) when auto-play is running
+      if (!reduceMotion) {
+        pauseBtn.hidden = false;
+        pauseBtn.addEventListener('click', function () {
+          userPaused = !userPaused;
+          pauseBtn.textContent = userPaused ? 'Resume auto-play' : 'Pause auto-play';
+          start();
+        });
+      }
+
+      go(0);
+      start();
+    })();
+
+    /* ------------------------------------------------------------------
+       Multi-step appraisal form
+       ------------------------------------------------------------------ */
+    (function () {
+      var form = document.getElementById('appraisal-form');
+      var steps = form.querySelectorAll('.step[data-step]');
+      var prev = document.getElementById('prev-step');
+      var next = document.getElementById('next-step');
+      var submit = document.getElementById('submit-form');
+      var progress = form.querySelector('.progress');
+      var bar = form.querySelector('.progress-bar');
+      var stepCount = document.getElementById('step-count');
+      var stepName = document.getElementById('step-name');
+      var thanks = document.getElementById('thanks');
+      var total = steps.length;
+      var current = 0;
+
+      var messages = {
+        address: 'Please enter the property address.',
+        suburb: 'Please choose a suburb.',
+        type: 'Please choose a property type.',
+        bedrooms: 'Please choose the number of bedrooms.',
+        bathrooms: 'Please choose the number of bathrooms.',
+        timeframe: 'Please choose a timeframe.',
+        name: 'Please enter your name.',
+        email: 'Please enter a valid email address.',
+        phone: 'Please enter a valid phone number.'
+      };
+
+      function setError(id, msg, el) {
+        document.getElementById(id + '-error').textContent = msg || '';
+        if (el) el.setAttribute('aria-invalid', msg ? 'true' : 'false');
+      }
+
+      function checkField(el) {
+        var val = el.value.trim();
+        var ok = val !== '';
+        if (ok && el.type === 'email') ok = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val);
+        if (ok && el.type === 'tel') ok = /^[+()\d\s-]{7,}$/.test(val) && val.replace(/\D/g, '').length >= 7;
+        setError(el.id, ok ? '' : messages[el.id], el);
+        return ok;
+      }
+
+      function validateStep(i) {
+        var firstBad = null;
+        steps[i].querySelectorAll('.input[required]').forEach(function (el) {
+          if (!checkField(el) && !firstBad) firstBad = el;
+        });
+        var radios = steps[i].querySelectorAll('input[type="radio"][name="timeframe"]');
+        if (radios.length) {
+          var group = document.getElementById('timeframe-group');
+          var picked = form.querySelector('input[name="timeframe"]:checked');
+          setError('timeframe', picked ? '' : messages.timeframe, group);
+          if (!picked && !firstBad) firstBad = radios[0];
+        }
+        if (firstBad) firstBad.focus();
+        return !firstBad;
+      }
+
+      function show(i) {
+        current = i;
+        steps.forEach(function (s, n) { s.hidden = n !== i; });
+        var name = steps[i].dataset.name;
+        stepCount.textContent = 'Step ' + (i + 1) + ' of ' + total;
+        stepName.textContent = name;
+        bar.style.width = ((i + 1) / total * 100) + '%';
+        progress.setAttribute('aria-valuenow', i + 1);
+        progress.setAttribute('aria-valuetext', 'Step ' + (i + 1) + ' of ' + total + ': ' + name);
+        prev.hidden = i === 0;
+        next.hidden = i === total - 1;
+        submit.hidden = i !== total - 1;
+      }
+
+      function focusStep() {
+        var first = steps[current].querySelector('input, select, textarea');
+        if (first) first.focus({ preventScroll: true });
+        form.closest('.form-card').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'nearest' });
+      }
+
+      next.addEventListener('click', function () {
+        if (validateStep(current)) { show(current + 1); focusStep(); }
+      });
+      prev.addEventListener('click', function () { show(current - 1); focusStep(); });
+
+      // Pressing Enter in a text field moves forward instead of submitting early
+      form.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' && e.target.tagName === 'INPUT' && current < total - 1) {
+          e.preventDefault(); next.click();
+        }
+      });
+
+      // Clear an error as soon as the field is fixed
+      form.addEventListener('input', function (e) {
+        if (e.target.classList.contains('input') && e.target.getAttribute('aria-invalid') === 'true') checkField(e.target);
+      });
+      form.addEventListener('change', function (e) {
+        if (e.target.name === 'timeframe') setError('timeframe', '', document.getElementById('timeframe-group'));
+        if (e.target.tagName === 'SELECT' && e.target.getAttribute('aria-invalid') === 'true') checkField(e.target);
+      });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!validateStep(current)) return;
+
+        var data = new FormData(form);
+
+        /* ==============================================================
+           FORM ENDPOINT: plug in Formspree or your email service here.
+           1. Create a form at https://formspree.io and copy its URL.
+           2. Paste it below, e.g. 'https://formspree.io/f/abcdwxyz'.
+           While ENDPOINT is empty the form just shows the thank-you
+           state and nothing is sent anywhere.
+           ============================================================== */
+        var ENDPOINT = '';
+
+        submit.disabled = true;
+        submit.textContent = 'Sending…';
+
+        var send = ENDPOINT
+          ? fetch(ENDPOINT, { method: 'POST', body: data, headers: { Accept: 'application/json' } })
+              .then(function (res) { if (!res.ok) throw new Error('Request failed'); })
+          : Promise.resolve();
+
+        send.then(function () {
+          var first = String(data.get('name') || '').trim().split(/\s+/)[0];
+          document.getElementById('thanks-name').textContent = first ? ', ' + first : '';
+          form.hidden = true;
+          thanks.hidden = false;
+          thanks.focus();
+        }).catch(function () {
+          submit.disabled = false;
+          submit.textContent = 'Request appraisal';
+          setError('phone', 'Sorry, something went wrong. Please try again, or call [PHONE].');
+        });
+      });
+
+      show(0);
+    })();
+  })();
+  </script>
+</body>
+</html>
